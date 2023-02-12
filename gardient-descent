@@ -1,0 +1,38 @@
+clc;
+clear all;
+data= [20 6.5;16 6;34 8.5; 23 7;27 9;32 9.5;18 7.5;22 8]
+x = data(:,1);
+target = data(:,2);
+m = length(target); 
+x = [ones(m,1),x]; 
+n = size(x,2); 
+w = [0,0]'; 
+w10 = w(1,1);
+w11 = w(2,1);
+eta = 0.000012415; 
+tol = 0.00001; 
+n_iter = 200; 
+temp=0;
+for i = 1:n_iter
+y_model = x*w; 
+err = (target-y_model); 
+err_square = err.*err; 
+objective_function(i)=sum(err_square)/(2*m);
+w10 = w10 + eta*sum(err);
+w11 = w11 + eta*sum(err.*x(:,2));
+w = [w10;w11];
+if abs(objective_function(i) - temp) <= tol
+break
+else
+temp = objective_function(i);
+end
+end
+figure(1)
+plot(objective_function);
+title('Convergeness of the Objective Function');
+figure(2)
+plot(x(:,2),target,'o');
+xlabel('Hours devoted to studying a subject');
+ylabel('Marks scored in that subject');
+hold on
+plot(x(:,2),y_model,'r');
