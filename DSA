@@ -1,0 +1,94 @@
+#include <stdio.h>
+
+void insertElement(int arr[], int size, int element, int index) {
+    int i;
+    // Shift elements to the right from the given index
+    for (i = size - 1; i >= index; i--) {
+        arr[i + 1] = arr[i];
+    }
+    arr[index] = element;
+}
+
+void deleteElement(int arr[], int size, int element) {
+    int i, j;
+    // Find the first occurrence of the element in the array
+    for (i = 0; i < size; i++) {
+        if (arr[i] == element) {
+            // Shift elements to the left to remove the element
+            for (j = i; j < size - 1; j++) {
+                arr[j] = arr[j + 1];
+            }
+            arr[size - 1] = 0; // Set last element to 0 or any other default value
+            break;
+        }
+    }
+    if (i == size) {
+        printf("Element not found in array\n");
+    }
+}
+
+int searchElement(int arr[], int size, int element) {
+    int i;
+    // Find the first occurrence of the element in the array
+    for (i = 0; i < size; i++) {
+        if (arr[i] == element) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+void sortArray(int arr[], int size) {
+    int i, j, temp;
+    // Use bubble sort to sort the array in ascending order
+    for (i = 0; i < size - 1; i++) {
+        for (j = 0; j < size - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+}
+
+int main() {
+    int size, i, element, index, choice;
+    printf("Enter the size of the array: ");
+    scanf("%d", &size);
+    int arr[size];
+    printf("Enter the elements of the array:\n");
+    for (i = 0; i < size; i++) {
+        scanf("%d", &arr[i]);
+    }
+    while (1) {
+        printf("\n");
+        printf("1. Insert element\n");
+        printf("2. Delete element\n");
+        printf("3. Search element\n");
+        printf("4. Sort array\n");
+        printf("5. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+        switch (choice) {
+            case 1:
+                printf("Enter the element to insert: ");
+                scanf("%d", &element);
+                printf("Enter the index to insert at: ");
+                scanf("%d", &index);
+                insertElement(arr, size, element, index);
+                size++;
+                printf("Array after inserting %d at index %d:\n", element, index);
+                for (i = 0; i < size; i++) {
+                    printf("%d ", arr[i]);
+                }
+                printf("\n");
+                break;
+            case 2:
+                printf("Enter the element to delete: ");
+                scanf("%d", &element);
+                deleteElement(arr, size, element);
+                size--;
+                printf("Array after deleting %d:\n", element);
+                for (i = 0; i < size; i++) {
+                   
