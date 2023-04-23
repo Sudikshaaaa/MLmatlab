@@ -1,0 +1,40 @@
+clear all;
+clc;
+% data given
+data=[20 6.5;16 6;34 8.5;23 7;27 9;32 9.5;18 7.5;22 8]
+% Input and target data
+x=data(:,1)
+t=data(:,2)
+m=length(t)  %finding the length of target data
+x=[ones(m,1),x]
+n=size(x,2);
+%initializing the weights
+w=[1,1]';
+w0=w(1,1);
+w1=w(2,1);
+% eta is the learning rate
+eta=0.000166;
+n_iter=100;      %no. of iterations
+ 
+for i=1:n_iter
+    y_model=x*w;
+    err=(t-y_model);
+    err_square=err.*err
+    obj_func(i)=sum(err_square)/(2*m);
+    w0=w0+eta*sum(err)
+    w1=w1+eta*sum(err.*x(:,2))
+    w=[w0;w1];
+end
+%plotting the various graphs
+figure(1)
+plot(obj_func);       %plotting the function
+title('convergence of  Objective Function');
+figure(2)
+plot(x(:,2),t,'ro');
+xlabel('Hours');
+ylabel('Marks');
+hold on;
+plot(x(:,2),y_model,'bl');
+
+
+
